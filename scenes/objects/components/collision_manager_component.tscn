@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bpcj10xeen7o3"]
+
+[ext_resource type="PackedScene" uid="uid://yw1edpxdaaq4" path="res://scenes/objects/templates/component.tscn" id="1_f3qkb"]
+[ext_resource type="Script" uid="uid://dfxguth1lsclh" path="res://scripts/components/collision_manager_component.gd" id="2_13vdj"]
+
+[node name="CollisionManagerComponent" instance=ExtResource("1_f3qkb")]
+script = ExtResource("2_13vdj")
+bullet_damage = 0
+drone_damage = 0
+player_damage = 0

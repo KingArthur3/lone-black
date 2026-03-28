@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5603deqkcedc"]
+
+[ext_resource type="PackedScene" uid="uid://dbfvn5ok7f28f" path="res://scenes/objects/explosions/explosion.tscn" id="1_o65t6"]
+[ext_resource type="AudioStream" uid="uid://3fm12p6ro47m" path="res://audio/effects/8-bit-explosion-big.mp3" id="2_r218d"]
+
+[node name="ExplosionPlayer" instance=ExtResource("1_o65t6")]
+size = 2.0
+
+[node name="ExplosionSound" parent="." index="0"]
+stream = ExtResource("2_r218d")
+volume_db = 0.0
+max_distance = 500.0
+
+[connection signal="finished" from="ExplosionSound" to="." method="_on_explosion_sound_finished"]

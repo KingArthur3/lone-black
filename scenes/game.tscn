@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://dxa6yg5fnkbbw"]
+
+[ext_resource type="Script" uid="uid://b3k05fhs1f48p" path="res://scripts/logic/game_manager.gd" id="1_p57ef"]
+[ext_resource type="PackedScene" uid="uid://rfcrhf3h4kqo" path="res://scenes/objects/asteroid.tscn" id="2_u5sy4"]
+[ext_resource type="PackedScene" uid="uid://dojkfaeobs8vl" path="res://scenes/objects/player.tscn" id="4_0tnpc"]
+[ext_resource type="PackedScene" uid="uid://cmbev7ykv04po" path="res://scenes/waves/wave_1.tscn" id="4_gee14"]
+[ext_resource type="PackedScene" uid="uid://c76g3sgwdrlx7" path="res://scenes/logic/wave_manager.tscn" id="4_p57ef"]
+[ext_resource type="PackedScene" uid="uid://cvgg57otbm5by" path="res://scenes/waves/wave_2.tscn" id="5_0tnpc"]
+[ext_resource type="PackedScene" uid="uid://64levbpch4j1" path="res://scenes/objects/misc/cursor.tscn" id="5_vtaks"]
+[ext_resource type="PackedScene" uid="uid://dnkcnqmm6uq4o" path="res://scenes/waves/wave_3.tscn" id="6_vtaks"]
+[ext_resource type="PackedScene" uid="uid://cmncxuepuivof" path="res://scenes/waves/wave_4.tscn" id="7_vtaks"]
+[ext_resource type="PackedScene" uid="uid://dhy8vuhugq00j" path="res://scenes/waves/wave_5.tscn" id="8_kvpfn"]
+[ext_resource type="PackedScene" uid="uid://dicnvyp7hx33s" path="res://scenes/waves/wave_6.tscn" id="9_kvpfn"]
+[ext_resource type="PackedScene" path="res://scenes/logic/asteroid_field_logic.tscn" id="10_6t8e2"]
+[ext_resource type="PackedScene" path="res://scenes/logic/session_control_logic.tscn" id="11_t0w6q"]
+
+[node name="Game" type="Node2D" unique_id=248789535]
+script = ExtResource("1_p57ef")
+player = NodePath("Player")
+
+[node name="logic" type="Node" parent="." unique_id=147181510]
+
+[node name="AsteroidFieldLogic" parent="logic" unique_id=632653259 instance=ExtResource("10_6t8e2")]
+asteroid_scene = ExtResource("2_u5sy4")
+
+[node name="SessionControlLogic" parent="logic" unique_id=468182516 instance=ExtResource("11_t0w6q")]
+
+[node name="WaveManager" parent="logic" unique_id=1315331811 instance=ExtResource("4_p57ef")]
+waves = Array[PackedScene]([ExtResource("4_gee14"), ExtResource("5_0tnpc"), ExtResource("6_vtaks"), ExtResource("7_vtaks"), ExtResource("8_kvpfn"), ExtResource("9_kvpfn")])
+
+[node name="Player" parent="." unique_id=1555009401 instance=ExtResource("4_0tnpc")]
+
+[node name="Cursor" parent="." unique_id=2115775846 instance=ExtResource("5_vtaks")]
+z_index = 10

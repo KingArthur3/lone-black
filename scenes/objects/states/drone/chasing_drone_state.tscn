@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dkj74ttibhnw3"]
+
+[ext_resource type="PackedScene" uid="uid://cdta14qoprccg" path="res://scenes/objects/templates/state.tscn" id="1_u1mw7"]
+[ext_resource type="Script" uid="uid://by3ufecyb46t3" path="res://scripts/states/drone/chasing_drone_state.gd" id="2_gspga"]
+
+[node name="ChasingDroneState" instance=ExtResource("1_u1mw7")]
+script = ExtResource("2_gspga")
+state_sprite = 0
+blinking_sprite = 0
+blinking_interval = 0.0
+
+[node name="BlinkingTimer" type="Timer" parent="." index="0"]
+
+[connection signal="timeout" from="BlinkingTimer" to="." method="_on_blinking_timer_timeout"]

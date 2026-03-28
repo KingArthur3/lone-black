@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://b2i6u5fm2cwac"]
+
+[ext_resource type="Texture2D" uid="uid://bcfj5v0wrx3np" path="res://sprites/drone.png" id="1_6kwg8"]
+[ext_resource type="Script" uid="uid://b78v3yv4gvixu" path="res://scripts/drone/drone.gd" id="1_ftt27"]
+[ext_resource type="PackedScene" uid="uid://de5dbg0qpg40t" path="res://scenes/objects/explosions/explosion_enemy.tscn" id="2_we8xp"]
+[ext_resource type="PackedScene" uid="uid://c5duwlgaa21xo" path="res://scenes/objects/components/health_component.tscn" id="3_hxhln"]
+[ext_resource type="AudioStream" uid="uid://bi2ac15j2shr8" path="res://audio/effects/alien-spaceship-hum.mp3" id="4_18hk5"]
+[ext_resource type="PackedScene" uid="uid://bpcj10xeen7o3" path="res://scenes/objects/components/collision_manager_component.tscn" id="4_ybjvg"]
+[ext_resource type="PackedScene" uid="uid://bttsa75oa201x" path="res://scenes/objects/explosions/smoke.tscn" id="5_cuyag"]
+[ext_resource type="PackedScene" uid="uid://couiiqlyecx0n" path="res://scenes/objects/components/drone/drone_movement_component.tscn" id="7_g22fv"]
+[ext_resource type="Script" uid="uid://cl1dn73u71q0i" path="res://scripts/misc/states/state_machine.gd" id="8_hxhln"]
+[ext_resource type="PackedScene" uid="uid://bqysur8yc2idb" path="res://scenes/objects/components/engine_component.tscn" id="8_ybjvg"]
+[ext_resource type="PackedScene" uid="uid://dmg38viensgon" path="res://scenes/objects/states/drone/wandering_drone_state.tscn" id="9_ybjvg"]
+[ext_resource type="PackedScene" uid="uid://dioo7kft21vtg" path="res://scenes/objects/states/drone/catch_up_drone_state.tscn" id="10_3mp46"]
+[ext_resource type="PackedScene" uid="uid://dkj74ttibhnw3" path="res://scenes/objects/states/drone/chasing_drone_state.tscn" id="12_3mp46"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6kwg8"]
+radius = 6.0
+
+[node name="Drone" type="RigidBody2D" unique_id=754341474 groups=["drone"]]
+z_index = 1
+mass = 0.5
+contact_monitor = true
+max_contacts_reported = 4
+script = ExtResource("1_ftt27")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2082157163]
+scale = Vector2(0.031, 0.031)
+texture = ExtResource("1_6kwg8")
+hframes = 3
+
+[node name="Collider" type="CollisionShape2D" parent="." unique_id=1127758119]
+shape = SubResource("CircleShape2D_6kwg8")
+
+[node name="Components" type="Node2D" parent="." unique_id=800889833]
+
+[node name="HealthComponent" parent="Components" unique_id=1623628528 instance=ExtResource("3_hxhln")]
+health = 2
+hit_sprite_frame = 2
+hit_sprite_duration = 0.2
+explosion_scene = ExtResource("2_we8xp")
+smoke_scene = ExtResource("5_cuyag")
+death_camera_shake_intensity = 4.0
+death_camera_shake_time_ms = 800
+
+[node name="CollisionManagerComponent" parent="Components" unique_id=118802407 instance=ExtResource("4_ybjvg")]
+bullet_damage = 1
+drone_damage = 99
+player_damage = 99
+
+[node name="DroneMovementComponent" parent="Components" unique_id=970407055 instance=ExtResource("7_g22fv")]
+desired_angular_velocity = 3.0
+desired_chase_angular_velocity = 10.0
+torque = 30.0
+max_speed = 80
+max_chase_speed = 200
+max_catch_up_speed = 120
+wandering_distance = 220
+chase_distance = 110
+
+[node name="EngineComponent" parent="Components" unique_id=1885692521 instance=ExtResource("8_ybjvg")]
+autostart = true
+min_volume_db = -40.0
+engine_sound = ExtResource("4_18hk5")
+
+[node name="StateMachine" type="Node" parent="." unique_id=2056702184 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("8_hxhln")
+initial_state = NodePath("CatchUpDroneState")
+metadata/_custom_type_script = "uid://cl1dn73u71q0i"
+
+[node name="WanderingDroneState" parent="StateMachine" unique_id=1300511290 instance=ExtResource("9_ybjvg")]
+state_sprite = 0
+
+[node name="CatchUpDroneState" parent="StateMachine" unique_id=535272854 instance=ExtResource("10_3mp46")]
+state_sprite = 0
+
+[node name="ChasingDroneState" parent="StateMachine" unique_id=1936722059 instance=ExtResource("12_3mp46")]
+blinking_sprite = 1
+blinking_interval = 0.2
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

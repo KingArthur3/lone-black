@@ -1,0 +1,61 @@
+[gd_scene load_steps=6 format=3 uid="uid://bqysur8yc2idb"]
+
+[ext_resource type="PackedScene" uid="uid://0qhtsu67vm08" path="res://scenes/objects/templates/component_2d.tscn" id="1_4di8n"]
+[ext_resource type="Script" uid="uid://cksgqaga2ymqi" path="res://scripts/components/engine_component.gd" id="2_0yalj"]
+[ext_resource type="Texture2D" uid="uid://cslavkmijl2u0" path="res://sprites/explosion_particle.png" id="2_1tt6x"]
+[ext_resource type="Texture2D" uid="uid://cf3k0fek6f0ub" path="res://sprites/boost_particle.png" id="3_qsv55"]
+
+[sub_resource type="Curve" id="Curve_7870u"]
+_data = [Vector2(0, 1), 0.0, -0.9642394, 0, 0, Vector2(1, 0), -1.0064433, 0.0, 0, 0]
+point_count = 2
+
+[node name="EngineComponent" instance=ExtResource("1_4di8n")]
+script = ExtResource("2_0yalj")
+autostart = false
+base_particles_amount = 10
+volume_fade_duration = 2.0
+max_volume_db = 0.0
+min_volume_db = -80.0
+engine_particles = null
+boost_particles = null
+engine_sound = null
+
+[node name="BoostParticles" type="CPUParticles2D" parent="." index="0"]
+z_index = -1
+emitting = false
+amount = 100
+texture = ExtResource("3_qsv55")
+lifetime = 2.0
+emission_shape = 3
+emission_rect_extents = Vector2(0, 3)
+direction = Vector2(-1, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 4.0
+initial_velocity_max = 5.0
+angular_velocity_min = -180.0
+angular_velocity_max = 180.0
+angle_max = 90.0
+scale_amount_min = 0.6
+scale_amount_curve = SubResource("Curve_7870u")
+
+[node name="EngineParticles" type="CPUParticles2D" parent="." index="1"]
+z_index = -1
+emitting = false
+amount = 10
+texture = ExtResource("2_1tt6x")
+lifetime = 0.3
+emission_shape = 3
+emission_rect_extents = Vector2(0, 3)
+direction = Vector2(-1, 0)
+gravity = Vector2(0, 0)
+initial_velocity_min = 4.0
+initial_velocity_max = 5.0
+angular_velocity_min = -180.0
+angular_velocity_max = 180.0
+angle_max = 90.0
+scale_amount_max = 1.2
+scale_amount_curve = SubResource("Curve_7870u")
+
+[node name="EngineSound" type="AudioStreamPlayer2D" parent="." index="2"]
+max_distance = 700.0

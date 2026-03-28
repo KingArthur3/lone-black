@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://c76g3sgwdrlx7"]
+
+[ext_resource type="Script" uid="uid://c31taul61akaa" path="res://scripts/logic/wave_manager.gd" id="1_ilyl6"]
+[ext_resource type="AudioStream" uid="uid://dbs0otqwachaj" path="res://audio/effects/beep.mp3" id="2_5xtmi"]
+[ext_resource type="PackedScene" uid="uid://cmbev7ykv04po" path="res://scenes/waves/wave_1.tscn" id="2_r3so2"]
+
+[node name="WaveManager" type="Node"]
+script = ExtResource("1_ilyl6")
+waves = Array[PackedScene]([ExtResource("2_r3so2")])
+
+[node name="BreakTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="NextWaveSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_5xtmi")
+volume_db = -5.0
+
+[connection signal="timeout" from="BreakTimer" to="." method="_start_wave"]

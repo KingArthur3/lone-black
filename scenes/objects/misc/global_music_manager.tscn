@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cq20aygwomnok"]
+
+[ext_resource type="PackedScene" uid="uid://bcuycxajqri2h" path="res://scenes/objects/misc/music_player.tscn" id="1_k31hd"]
+
+[node name="GlobalMusicManager" type="Node"]
+
+[node name="MusicPlayer" parent="." instance=ExtResource("1_k31hd")]

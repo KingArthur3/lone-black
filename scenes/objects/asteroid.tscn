@@ -1,0 +1,198 @@
+[gd_scene load_steps=8 format=3 uid="uid://rfcrhf3h4kqo"]
+
+[ext_resource type="Texture2D" uid="uid://kycsrk2l8k3f" path="res://sprites/asteroid.png" id="1_rthj0"]
+[ext_resource type="Script" uid="uid://dg0n0n8erit51" path="res://scripts/objects/asteroid.gd" id="1_tm8fx"]
+[ext_resource type="Texture2D" uid="uid://x86irapbjy3f" path="res://sprites/asteroid2.png" id="3_logps"]
+[ext_resource type="Texture2D" uid="uid://c2digp1t67npj" path="res://sprites/asteroid3.png" id="4_4pusd"]
+[ext_resource type="Texture2D" uid="uid://rk8tydopajwd" path="res://sprites/asteroid4.png" id="5_xticm"]
+[ext_resource type="Texture2D" uid="uid://cgl4xei81i4jj" path="res://sprites/asteroid5.png" id="6_b7usw"]
+[ext_resource type="Texture2D" uid="uid://c8roqxy33ces2" path="res://sprites/asteroid6.png" id="7_lvcet"]
+
+[node name="Asteroid" type="RigidBody2D"]
+z_index = 2
+collision_layer = 3
+mass = 100.0
+script = ExtResource("1_tm8fx")
+max_scale = 2.5
+base_mass = 5.0
+
+[node name="Variant1" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-4, -16, 10, -14, 13, -10, 14, -6, 12, 0, 12, 4, 13, 12, 9, 15, 6, 16, 2, 15, -3, 15, -9, 15, -12, 12, -14, 4, -14, -1, -10, -8, -7, -13)
+
+[node name="Sprite2D" type="Sprite2D" parent="Variant1"]
+texture_filter = 1
+scale = Vector2(0.031, 0.031)
+texture = ExtResource("1_rthj0")
+metadata/_aseprite_wizard_interface_config_ = {
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"convert_fps_field": 60.0,
+"convert_ms_field": 16.0,
+"convert_to_fps": false,
+"embed_tex": true,
+"i_mode": 1,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "",
+"scale": "1.0",
+"slice": "",
+"source": "res://sprites/asteroid.aseprite",
+"source_uid": 113978485718502704
+}
+metadata/_aseprite_wizard_source_file_hash_ = "bfed91eb93fb164bfb7c76eb803f6dff"
+
+[node name="Variant2" type="CollisionPolygon2D" parent="."]
+position = Vector2(2, -2)
+polygon = PackedVector2Array(-4, -15, 4, -13, 10, -13, 13, -9, 14, 0, 15, 4, 13, 11, 6, 15, -4, 14, -9, 15, -13, 13, -15, 6, -14, 0, -12, -9, -8, -14)
+
+[node name="Sprite2D" type="Sprite2D" parent="Variant2"]
+texture_filter = 1
+scale = Vector2(0.031, 0.031)
+texture = ExtResource("3_logps")
+metadata/_aseprite_wizard_interface_config_ = {
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"convert_fps_field": 60.0,
+"convert_ms_field": 16.0,
+"convert_to_fps": false,
+"embed_tex": true,
+"i_mode": 1,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "",
+"scale": "1.0",
+"slice": "",
+"source": "res://sprites/asteroid.aseprite",
+"source_uid": 113978485718502704
+}
+metadata/_aseprite_wizard_source_file_hash_ = "bfed91eb93fb164bfb7c76eb803f6dff"
+
+[node name="Variant3" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-1, -15, 4, -14, 12, -9, 14, -5, 14, 0, 11, 5, 7, 7, 7, 13, 4, 14, 0, 14, -3, 13, -6, 14, -10, 13, -12, 9, -10, 4, -5, -1, -6, -2, -9, -2, -10, -5, -9, -11)
+
+[node name="Sprite2D" type="Sprite2D" parent="Variant3"]
+texture_filter = 1
+scale = Vector2(0.031, 0.031)
+texture = ExtResource("4_4pusd")
+metadata/_aseprite_wizard_interface_config_ = {
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"convert_fps_field": 60.0,
+"convert_ms_field": 16.0,
+"convert_to_fps": false,
+"embed_tex": true,
+"i_mode": 1,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "",
+"scale": "1.0",
+"slice": "",
+"source": "res://sprites/asteroid.aseprite",
+"source_uid": 113978485718502704
+}
+metadata/_aseprite_wizard_source_file_hash_ = "bfed91eb93fb164bfb7c76eb803f6dff"
+
+[node name="Variant4" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-3, -14, -10, -11, -12, -6, -13, -1, -11, 5, -6, 10, 1, 13, 8, 14, 13, 12, 14, 7, 11, 2, 7, -2, 6, -8, 5, -12, 2, -14)
+
+[node name="Sprite2D" type="Sprite2D" parent="Variant4"]
+texture_filter = 1
+scale = Vector2(0.031, 0.031)
+texture = ExtResource("5_xticm")
+metadata/_aseprite_wizard_interface_config_ = {
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"convert_fps_field": 60.0,
+"convert_ms_field": 16.0,
+"convert_to_fps": false,
+"embed_tex": true,
+"i_mode": 1,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "",
+"scale": "1.0",
+"slice": "",
+"source": "res://sprites/asteroid.aseprite",
+"source_uid": 113978485718502704
+}
+metadata/_aseprite_wizard_source_file_hash_ = "bfed91eb93fb164bfb7c76eb803f6dff"
+
+[node name="Variant5" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-4, -15, 3, -10, 7, -5, 12, 6, 12, 11, 9, 14, 4, 15, -1, 13, -4, 7, -5, 0, -9, -3, -12, -7, -10, -13)
+
+[node name="Sprite2D" type="Sprite2D" parent="Variant5"]
+texture_filter = 1
+scale = Vector2(0.031, 0.031)
+texture = ExtResource("6_b7usw")
+metadata/_aseprite_wizard_interface_config_ = {
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"convert_fps_field": 60.0,
+"convert_ms_field": 16.0,
+"convert_to_fps": false,
+"embed_tex": true,
+"i_mode": 1,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "",
+"scale": "1.0",
+"slice": "",
+"source": "res://sprites/asteroid.aseprite",
+"source_uid": 113978485718502704
+}
+metadata/_aseprite_wizard_source_file_hash_ = "bfed91eb93fb164bfb7c76eb803f6dff"
+
+[node name="Variant6" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-7, -15, -4, -12, 1, -14, 6, -12, 8, -9, 11, -8, 13, -5, 13, 1, 10, 3, 4, 1, 2, 1, 1, 3, 4, 5, 8, 7, 10, 10, 10, 13, 8, 14, 2, 14, -3, 11, -5, 10, -10, 9, -14, 6, -15, -1, -14, -9, -9, -15)
+
+[node name="Sprite2D" type="Sprite2D" parent="Variant6"]
+texture_filter = 1
+scale = Vector2(0.031, 0.031)
+texture = ExtResource("7_lvcet")
+metadata/_aseprite_wizard_interface_config_ = {
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"convert_fps_field": 60.0,
+"convert_ms_field": 16.0,
+"convert_to_fps": false,
+"embed_tex": true,
+"i_mode": 1,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "",
+"scale": "1.0",
+"slice": "",
+"source": "res://sprites/asteroid.aseprite",
+"source_uid": 113978485718502704
+}
+metadata/_aseprite_wizard_source_file_hash_ = "bfed91eb93fb164bfb7c76eb803f6dff"

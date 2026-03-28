@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvgg57otbm5by"]
+
+[ext_resource type="PackedScene" uid="uid://b2i6u5fm2cwac" path="res://scenes/objects/drone.tscn" id="1_dcmvw"]
+
+[node name="Wave2" type="Node2D"]
+
+[node name="Drone" parent="." instance=ExtResource("1_dcmvw")]
+position = Vector2(700, 0)
+
+[node name="Drone2" parent="." instance=ExtResource("1_dcmvw")]
+position = Vector2(-500, 0)

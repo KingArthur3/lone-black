@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://cqkpeupnewhad"]
+
+[ext_resource type="PackedScene" uid="uid://cdta14qoprccg" path="res://scenes/objects/templates/state.tscn" id="1_cy7ex"]
+[ext_resource type="Script" uid="uid://bcnwsiwy25mpl" path="res://scripts/states/player/boosting_player_state.gd" id="2_31cln"]
+
+[node name="BoostingPlayerState" instance=ExtResource("1_cy7ex")]
+script = ExtResource("2_31cln")

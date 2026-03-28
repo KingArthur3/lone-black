@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://dioo7kft21vtg"]
+
+[ext_resource type="PackedScene" uid="uid://cdta14qoprccg" path="res://scenes/objects/templates/state.tscn" id="1_f10ta"]
+[ext_resource type="Script" uid="uid://b1x48xyuck7wb" path="res://scripts/states/drone/catch_up_drone_state.gd" id="2_ywy5j"]
+
+[node name="CatchUpDroneState" instance=ExtResource("1_f10ta")]
+script = ExtResource("2_ywy5j")

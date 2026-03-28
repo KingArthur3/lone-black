@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://ccxxtrn4oqof5"]
+
+[ext_resource type="PackedScene" uid="uid://yw1edpxdaaq4" path="res://scenes/objects/templates/component.tscn" id="1_cuyhq"]
+[ext_resource type="Script" uid="uid://dxgg3qhabi5se" path="res://scripts/components/player/player_movement_component.gd" id="2_exkeh"]
+[ext_resource type="AudioStream" uid="uid://c6x8ma63k8jsu" path="res://audio/effects/boost_ready.mp3" id="3_vokr6"]
+
+[node name="PlayerMovementComponent" instance=ExtResource("1_cuyhq")]
+script = ExtResource("2_exkeh")
+turn_thrust = 100.0
+max_turn_speed = 3.0
+forward_thrust = 100.0
+boost_thrust = 150.0
+max_speed = 100.0
+boost_max_speed = 125.0
+boost_icon_path = NodePath("")
+boost_duration = 1.0
+boost_reload_time = 2.0
+boost_double_click_interval = 0.3
+
+[node name="BoostDurationTimer" type="Timer" parent="." index="0"]
+one_shot = true
+
+[node name="BoostReloadTimer" type="Timer" parent="." index="1"]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
+[node name="BoostDoubleClickInterval" type="Timer" parent="." index="2"]
+wait_time = 0.3
+one_shot = true
+
+[node name="BoostReadySound" type="AudioStreamPlayer" parent="." index="3"]
+stream = ExtResource("3_vokr6")
+
+[connection signal="timeout" from="BoostReloadTimer" to="." method="_on_boost_reload_timer_timeout"]

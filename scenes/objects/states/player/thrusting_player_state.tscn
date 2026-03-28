@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqfinyc2estbr"]
+
+[ext_resource type="PackedScene" uid="uid://cdta14qoprccg" path="res://scenes/objects/templates/state.tscn" id="1_8b6lb"]
+[ext_resource type="Script" uid="uid://cgksx85ayi78e" path="res://scripts/states/player/thrusting_player_state.gd" id="2_ygtbl"]
+
+[node name="ThrustingPlayerState" instance=ExtResource("1_8b6lb")]
+script = ExtResource("2_ygtbl")

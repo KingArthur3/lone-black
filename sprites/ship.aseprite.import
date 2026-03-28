@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://veramor2e7ca"
+path="res://.godot/imported/ship.aseprite-25e8b52e2e8e2dc6319daf95072d0350.res"
+
+[deps]
+
+source_file="res://sprites/ship.aseprite"
+dest_files=["res://.godot/imported/ship.aseprite-25e8b52e2e8e2dc6319daf95072d0350.res"]
+
+[params]
+

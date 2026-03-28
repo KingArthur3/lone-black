@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://64levbpch4j1"]
+
+[ext_resource type="Script" uid="uid://dl14teqnskvtt" path="res://scripts/effects/cursor.gd" id="1_8m74v"]
+[ext_resource type="Shader" uid="uid://boaabpyn1rj6j" path="res://scripts/shaders/cursor.gdshader" id="2_1u7rx"]
+[ext_resource type="Texture2D" uid="uid://b8mdgym6vu58y" path="res://sprites/cursor.png" id="2_qbmrg"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c3u7a"]
+shader = ExtResource("2_1u7rx")
+
+[node name="Cursor" type="Node2D"]
+z_index = -10
+script = ExtResource("1_8m74v")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_c3u7a")
+scale = Vector2(0.031, 0.031)
+texture = ExtResource("2_qbmrg")

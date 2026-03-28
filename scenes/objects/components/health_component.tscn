@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5duwlgaa21xo"]
+
+[ext_resource type="PackedScene" uid="uid://yw1edpxdaaq4" path="res://scenes/objects/templates/component.tscn" id="1_868ii"]
+[ext_resource type="Script" uid="uid://db2yrvsm3yo1s" path="res://scripts/components/health_component.gd" id="2_v2iso"]
+
+[node name="HealthComponent" instance=ExtResource("1_868ii")]
+script = ExtResource("2_v2iso")
+health = 3
+health_bar_path = NodePath("")
+hit_sprite_frame = -1
+hit_sprite_duration = 0.1
+explosion_scene = null
+death_camera_shake_intensity = 10.0
+death_camera_shake_time_ms = 1000
+
+[node name="HitSpriteDurationTimer" type="Timer" parent="." index="0"]
+one_shot = true
+
+[connection signal="timeout" from="HitSpriteDurationTimer" to="." method="_on_hit_sprite_duration_timer_timeout"]

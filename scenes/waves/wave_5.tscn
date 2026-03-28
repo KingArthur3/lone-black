@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://dhy8vuhugq00j"]
+
+[ext_resource type="PackedScene" uid="uid://b2i6u5fm2cwac" path="res://scenes/objects/drone.tscn" id="1_w5gra"]
+
+[node name="Wave5" type="Node2D"]
+
+[node name="Drone" parent="." instance=ExtResource("1_w5gra")]
+position = Vector2(530, -170)
+
+[node name="Drone2" parent="." instance=ExtResource("1_w5gra")]
+position = Vector2(3, -498)
+
+[node name="Drone3" parent="." instance=ExtResource("1_w5gra")]
+position = Vector2(-482, -183)
+
+[node name="Drone4" parent="." instance=ExtResource("1_w5gra")]
+position = Vector2(-297, 410)
+
+[node name="Drone5" parent="." instance=ExtResource("1_w5gra")]
+position = Vector2(284, 403)

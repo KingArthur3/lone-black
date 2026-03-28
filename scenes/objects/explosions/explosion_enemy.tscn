@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://de5dbg0qpg40t"]
+
+[ext_resource type="PackedScene" uid="uid://dbfvn5ok7f28f" path="res://scenes/objects/explosions/explosion.tscn" id="1_vk5sb"]
+[ext_resource type="Texture2D" uid="uid://dojh6yn6a3jbe" path="res://sprites/enemy_explosion_particle.png" id="2_30kvv"]
+[ext_resource type="AudioStream" uid="uid://3fm12p6ro47m" path="res://audio/effects/8-bit-explosion-big.mp3" id="3_30kvv"]
+
+[node name="ExplosionEnemy" instance=ExtResource("1_vk5sb")]
+particle_texture = ExtResource("2_30kvv")
+size = 3.0
+
+[node name="ExplosionSound" parent="." index="0"]
+stream = ExtResource("3_30kvv")
+volume_db = 0.0
+max_distance = 500.0

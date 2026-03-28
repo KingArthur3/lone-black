@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://dbfvn5ok7f28f"]
+
+[ext_resource type="Texture2D" uid="uid://cslavkmijl2u0" path="res://sprites/explosion_particle.png" id="1_dgoop"]
+[ext_resource type="Script" uid="uid://c3qnejpcwi21t" path="res://scripts/effects/explosion.gd" id="2_m0kxi"]
+[ext_resource type="AudioStream" uid="uid://bh7rtb7hoxwwc" path="res://audio/effects/8-bit-explosion.mp3" id="3_5oaj8"]
+
+[sub_resource type="Curve" id="Curve_dgoop"]
+_data = [Vector2(0, 1), 0.0, -0.96171254, 0, 0, Vector2(1, 0), -1.0511743, 0.0, 0, 0]
+point_count = 2
+
+[node name="Explosion" type="CPUParticles2D" unique_id=1460452113]
+emitting = false
+amount = 20
+texture = ExtResource("1_dgoop")
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 1.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 5.0
+initial_velocity_max = 15.0
+angular_velocity_min = -180.0
+angular_velocity_max = 180.0
+angle_max = 90.0
+scale_amount_min = 0.5
+scale_amount_curve = SubResource("Curve_dgoop")
+script = ExtResource("2_m0kxi")
+particle_texture = ExtResource("1_dgoop")
+
+[node name="ExplosionSound" type="AudioStreamPlayer2D" parent="." unique_id=297632957]
+stream = ExtResource("3_5oaj8")
+volume_db = -10.0
+autoplay = true
+max_distance = 300.0
+
+[connection signal="finished" from="." to="." method="_on_finished"]

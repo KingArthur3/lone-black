@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://couiiqlyecx0n"]
+
+[ext_resource type="PackedScene" uid="uid://yw1edpxdaaq4" path="res://scenes/objects/templates/component.tscn" id="1_urgd7"]
+[ext_resource type="Script" uid="uid://braacfhr1nqoq" path="res://scripts/components/drone/drone_movement_component.gd" id="2_2uonk"]
+
+[node name="DroneMovementComponent" instance=ExtResource("1_urgd7")]
+script = ExtResource("2_2uonk")
+forward_thrust = 100.0
+desired_angular_velocity = 360.0
+desired_chase_angular_velocity = 30.0
+torque = 100.0
+max_speed = 100
+max_chase_speed = 250
+max_catch_up_speed = 200
+wandering_distance = 300
+chase_distance = 120

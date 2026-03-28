@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/logic/session_control_logic.gd" id="1_km2t2"]
+
+[node name="SessionControlLogic" type="Node"]
+script = ExtResource("1_km2t2")

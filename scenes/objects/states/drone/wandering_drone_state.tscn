@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://dmg38viensgon"]
+
+[ext_resource type="PackedScene" uid="uid://cdta14qoprccg" path="res://scenes/objects/templates/state.tscn" id="1_4rwwn"]
+[ext_resource type="Script" uid="uid://cihmuicdm4aki" path="res://scripts/states/drone/wandering_drone_state.gd" id="2_r6rb7"]
+
+[node name="WanderingDroneState" instance=ExtResource("1_4rwwn")]
+script = ExtResource("2_r6rb7")

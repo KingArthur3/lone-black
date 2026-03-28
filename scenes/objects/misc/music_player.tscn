@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bcuycxajqri2h"]
+
+[ext_resource type="AudioStream" uid="uid://dvunttlp6ttom" path="res://audio/music/lone-black.mp3" id="1_7khlm"]
+
+[node name="MusicPlayer" type="AudioStreamPlayer"]
+stream = ExtResource("1_7khlm")
+autoplay = true
+
+[connection signal="finished" from="." to="." method="_on_finished"]

@@ -1,0 +1,116 @@
+[gd_scene format=3 uid="uid://dojkfaeobs8vl"]
+
+[ext_resource type="Script" uid="uid://f0e0ybfnwixa" path="res://scripts/player/player.gd" id="1_fcc4x"]
+[ext_resource type="Texture2D" uid="uid://i14mqgj75oic" path="res://sprites/ship.png" id="2_dsjou"]
+[ext_resource type="Script" uid="uid://crkiq0xwqtbc4" path="res://scripts/ui/player_camera.gd" id="3_pagoc"]
+[ext_resource type="PackedScene" uid="uid://c5603deqkcedc" path="res://scenes/objects/explosions/explosion_player.tscn" id="3_qovgx"]
+[ext_resource type="PackedScene" uid="uid://bp4am4ne3ujxx" path="res://scenes/objects/UI/vhs_shader.tscn" id="6_vm408"]
+[ext_resource type="PackedScene" uid="uid://co5rtvkn5bqtf" path="res://scenes/objects/UI/ui.tscn" id="6_xdf27"]
+[ext_resource type="Texture2D" uid="uid://cslavkmijl2u0" path="res://sprites/explosion_particle.png" id="7_g4pvk"]
+[ext_resource type="Texture2D" uid="uid://cf3k0fek6f0ub" path="res://sprites/boost_particle.png" id="8_fcc4x"]
+[ext_resource type="AudioStream" uid="uid://bythdpnm0miav" path="res://audio/effects/spaceship-hum.mp3" id="9_37b34"]
+[ext_resource type="PackedScene" uid="uid://bpcj10xeen7o3" path="res://scenes/objects/components/collision_manager_component.tscn" id="10_cu6h5"]
+[ext_resource type="PackedScene" uid="uid://ccxxtrn4oqof5" path="res://scenes/objects/components/player/player_movement_component.tscn" id="13_1y4qm"]
+[ext_resource type="PackedScene" uid="uid://cqkpeupnewhad" path="res://scenes/objects/states/player/boosting_player_state.tscn" id="13_ulqmn"]
+[ext_resource type="PackedScene" uid="uid://c5duwlgaa21xo" path="res://scenes/objects/components/health_component.tscn" id="14_1y4qm"]
+[ext_resource type="PackedScene" uid="uid://bqysur8yc2idb" path="res://scenes/objects/components/engine_component.tscn" id="15_6i7we"]
+[ext_resource type="PackedScene" uid="uid://2afcnwgdr7ms" path="res://scenes/objects/components/shooting_component.tscn" id="15_tc7nl"]
+[ext_resource type="Script" uid="uid://cl1dn73u71q0i" path="res://scripts/misc/states/state_machine.gd" id="16_tc7nl"]
+[ext_resource type="PackedScene" uid="uid://b6tnsn4kjvug1" path="res://scenes/objects/states/player/idle_player_state.tscn" id="17_6i7we"]
+[ext_resource type="PackedScene" uid="uid://bqfinyc2estbr" path="res://scenes/objects/states/player/thrusting_player_state.tscn" id="17_tc7nl"]
+
+[node name="Player" type="RigidBody2D" unique_id=284907448]
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_fcc4x")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1040832999]
+texture_filter = 1
+rotation = 1.5707964
+scale = Vector2(0.031, 0.031)
+texture = ExtResource("2_dsjou")
+hframes = 2
+metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": false,
+"output_section": true,
+"pending_changes": {},
+"slice_section": false
+}
+metadata/_aseprite_wizard_config_ = {
+"convert_fps_field": 60.0,
+"convert_ms_field": 16.0,
+"convert_to_fps": false,
+"embed_tex": true,
+"i_mode": 1,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "",
+"scale": "1.0",
+"slice": "",
+"source": "res://sprites/ship.aseprite",
+"source_uid": 1483256069008090164
+}
+metadata/_aseprite_wizard_source_file_hash_ = "be35170402234d2d065146c371a321d6"
+
+[node name="PlayerCamera" type="Camera2D" parent="." unique_id=251710365]
+position_smoothing_speed = 3.0
+script = ExtResource("3_pagoc")
+min_zoom = 0.75
+max_zoom = 1.25
+zoom_step = 0.05
+
+[node name="UI" parent="PlayerCamera" unique_id=1837845807 instance=ExtResource("6_xdf27")]
+
+[node name="VHSShader" parent="PlayerCamera" unique_id=1674295609 instance=ExtResource("6_vm408")]
+layer = 3
+follow_viewport_enabled = false
+
+[node name="Collider" type="CollisionPolygon2D" parent="." unique_id=1604806705]
+z_index = 1
+polygon = PackedVector2Array(-8, 0, -8, -4, -7, -6, -5, -8, -2, -7, 0, -4, 5, -2, 8, -1, 8, 1, 5, 2, 0, 4, -2, 7, -5, 8, -7, 6, -8, 4)
+
+[node name="AudioListener" type="AudioListener2D" parent="." unique_id=963090005]
+current = true
+
+[node name="Components" type="Node2D" parent="." unique_id=1036291963]
+
+[node name="PlayerMovementComponent" parent="Components" unique_id=906841994 instance=ExtResource("13_1y4qm")]
+boost_icon_path = NodePath("../../PlayerCamera/UI/BoostIcon")
+
+[node name="EngineComponent" parent="Components" unique_id=155508655 instance=ExtResource("15_6i7we")]
+position = Vector2(-7, 0)
+volume_fade_duration = 0.3
+min_volume_db = -40.0
+engine_particles = ExtResource("7_g4pvk")
+boost_particles = ExtResource("8_fcc4x")
+engine_sound = ExtResource("9_37b34")
+
+[node name="HealthComponent" parent="Components" unique_id=1558226903 instance=ExtResource("14_1y4qm")]
+health_bar_path = NodePath("../../PlayerCamera/UI/HealthBar")
+hit_sprite_frame = 1
+hit_sprite_duration = 0.2
+explosion_scene = ExtResource("3_qovgx")
+smoke_scene = null
+
+[node name="ShootingComponent" parent="Components" unique_id=73161122 instance=ExtResource("15_tc7nl")]
+position = Vector2(12, 1)
+reload_time = 0.3
+
+[node name="CollisionManagerComponent" parent="Components" unique_id=1057509436 instance=ExtResource("10_cu6h5")]
+bullet_damage = 1
+drone_damage = 1
+
+[node name="StateMachine" type="Node" parent="." unique_id=386953202 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("16_tc7nl")
+initial_state = NodePath("IdlePlayerState")
+metadata/_custom_type_script = "uid://cl1dn73u71q0i"
+
+[node name="IdlePlayerState" parent="StateMachine" unique_id=1045411755 instance=ExtResource("17_6i7we")]
+
+[node name="ThrustingPlayerState" parent="StateMachine" unique_id=1962745743 instance=ExtResource("17_tc7nl")]
+
+[node name="BoostingPlayerState" parent="StateMachine" unique_id=1459118262 instance=ExtResource("13_ulqmn")]
