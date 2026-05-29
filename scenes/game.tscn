@@ -13,10 +13,36 @@
 [ext_resource type="PackedScene" uid="uid://dicnvyp7hx33s" path="res://scenes/waves/wave_6.tscn" id="9_kvpfn"]
 [ext_resource type="PackedScene" path="res://scenes/logic/asteroid_field_logic.tscn" id="10_6t8e2"]
 [ext_resource type="PackedScene" path="res://scenes/logic/session_control_logic.tscn" id="11_t0w6q"]
+[ext_resource type="Texture2D" uid="uid://dvgqr4unkiof" path="res://sprites/stars_far.png" id="12_stars_far"]
+[ext_resource type="Texture2D" uid="uid://u8166hr157s" path="res://sprites/stars_close.png" id="13_stars_close"]
 
 [node name="Game" type="Node2D" unique_id=248789535]
 script = ExtResource("1_p57ef")
 player = NodePath("Player")
+
+[node name="BackgroundStarsFar" type="Parallax2D" parent="." unique_id=1188065110]
+z_index = -100
+scroll_scale = Vector2(0.1, 0.1)
+repeat_size = Vector2(512, 512)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="BackgroundStarsFar" unique_id=875583534]
+texture_filter = 4
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("12_stars_far")
+centered = false
+
+[node name="BackgroundStarsClose" type="Parallax2D" parent="." unique_id=146979518]
+z_index = -99
+scroll_scale = Vector2(0.2, 0.2)
+repeat_size = Vector2(512, 512)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="BackgroundStarsClose" unique_id=1297606881]
+texture_filter = 4
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("13_stars_close")
+centered = false
 
 [node name="logic" type="Node" parent="." unique_id=147181510]
 
