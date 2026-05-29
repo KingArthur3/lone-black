@@ -29,7 +29,6 @@ particle_texture = ExtResource("1_dgoop")
 
 [node name="ExplosionSound" type="AudioStreamPlayer2D" parent="." unique_id=297632957]
 stream = ExtResource("3_5oaj8")
-volume_db = -10.0
 autoplay = true
 max_distance = 300.0
 

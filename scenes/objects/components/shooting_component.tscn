@@ -1,24 +1,23 @@
-[gd_scene load_steps=5 format=3 uid="uid://2afcnwgdr7ms"]
+[gd_scene format=3 uid="uid://2afcnwgdr7ms"]
 
 [ext_resource type="PackedScene" uid="uid://0qhtsu67vm08" path="res://scenes/objects/templates/component_2d.tscn" id="1_otbqy"]
 [ext_resource type="Script" uid="uid://d3yrwiemo052x" path="res://scripts/components/shooting_component.gd" id="2_y2aaw"]
 [ext_resource type="PackedScene" uid="uid://tts7si2avep3" path="res://scenes/objects/bullet.tscn" id="3_i83lq"]
 [ext_resource type="AudioStream" uid="uid://ciqb86alyskgv" path="res://audio/effects/8-bit-laser.mp3" id="4_17att"]
 
-[node name="ShootingComponent" instance=ExtResource("1_otbqy")]
+[node name="ShootingComponent" unique_id=420439321 instance=ExtResource("1_otbqy")]
 script = ExtResource("2_y2aaw")
 reload_time = 0.5
 bullet_scene = ExtResource("3_i83lq")
 bullet_force = 200.0
 recoil_amount = 100.0
 
-[node name="ShootSound" type="AudioStreamPlayer2D" parent="." index="0"]
+[node name="ShootSound" type="AudioStreamPlayer2D" parent="." index="0" unique_id=1004375654]
 stream = ExtResource("4_17att")
-volume_db = -10.0
 max_distance = 500.0
 max_polyphony = 5
 
-[node name="ReloadTimer" type="Timer" parent="." index="1"]
+[node name="ReloadTimer" type="Timer" parent="." index="1" unique_id=1387698736]
 wait_time = 0.5
 one_shot = true
 autostart = true

@@ -84,6 +84,7 @@ boost_icon_path = NodePath("../../PlayerCamera/UI/BoostIcon")
 [node name="EngineComponent" parent="Components" unique_id=155508655 instance=ExtResource("15_6i7we")]
 position = Vector2(-7, 0)
 volume_fade_duration = 0.3
+max_volume_db = 2.0
 min_volume_db = -40.0
 engine_particles = ExtResource("7_g4pvk")
 boost_particles = ExtResource("8_fcc4x")
