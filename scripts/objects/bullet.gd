@@ -2,33 +2,72 @@ extends RigidBody2D
 class_name Bullet
 ## Bullet
 ##
-## Manages the explosion of the bullet upon hitting something
+## Manages the explosion of the bullet and its homing behavior.
 
-@export var max_homing_distance : float = 100
+@export_group("Homing Configuration")
+# The range (in pixels) within which the bullet can detect and seek enemies.
+@export var detection_range : float = 200.0
+# How fast the bullet can turn towards the target (in degrees per second).
+@export var turn_rate : float = 60.0
+
+@export_group("Visuals & Effects")
 @export var explosion_scene : PackedScene
 
+# Keep reference to movement component if needed for compatibility
 @onready var movement_component = $"Components/BulletMovementComponent"
+
+var _initial_speed : float = 0.0
+var _initialized_speed := false
+
+func _ready() -> void:
+	# Ensure the bullet starts with an aligned rotation
+	if linear_velocity.length() > 0.0:
+		rotation = linear_velocity.angle()
+
 
 func get_closest_enemy() -> Node2D:
 	var enemies = get_tree().get_nodes_in_group("drone")
 	var closest_distance = INF
 	var closest_enemy = null
 	for enemy in enemies:
-		var distance = global_position.distance_to(enemy.global_position)
-		if distance < closest_distance:
-			closest_distance = distance
-			closest_enemy = enemy
-	return closest_enemy if closest_distance < max_homing_distance else null 
+		if is_instance_valid(enemy):
+			var distance = global_position.distance_to(enemy.global_position)
+			if distance < closest_distance:
+				closest_distance = distance
+				closest_enemy = enemy
+	return closest_enemy if closest_distance < detection_range else null 
 
 
-func _physics_process(_delta) -> void:
+func _physics_process(delta: float) -> void:
+	if not _initialized_speed:
+		_initial_speed = linear_velocity.length()
+		if _initial_speed > 0.0:
+			_initialized_speed = true
+
 	var closest_enemy = get_closest_enemy()
 	if closest_enemy:
-		movement_component.rotate_towards_position(closest_enemy.global_position)
+		# Homing logic: steer velocity towards target
+		var target_dir = (closest_enemy.global_position - global_position).normalized()
+		var current_dir = linear_velocity.normalized()
+		
+		# Fallback if velocity is zero
+		if current_dir == Vector2.ZERO:
+			current_dir = Vector2.RIGHT.rotated(rotation)
+			
+		var angle_to_target = current_dir.angle_to(target_dir)
+		var max_turn_angle = deg_to_rad(turn_rate) * delta
+		var new_dir = current_dir.rotated(clamp(angle_to_target, -max_turn_angle, max_turn_angle))
+		
+		# Apply velocity and align rotation
+		var speed = _initial_speed if _initial_speed > 0.0 else 200.0
+		linear_velocity = new_dir * speed
+		rotation = linear_velocity.angle()
 	else:
-		movement_component.stop_turning()
-	movement_component.thrust_forward()
-	movement_component.slow_down_if_needed()
+		# If no enemy, fly straight and align rotation with velocity
+		if linear_velocity.length() > 0.0:
+			rotation = linear_velocity.angle()
+			if _initial_speed > 0.0:
+				linear_velocity = linear_velocity.normalized() * _initial_speed
 
 
 func explode() -> void:

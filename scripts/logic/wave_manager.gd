@@ -19,8 +19,6 @@ func _ready() -> void:
 	
 	wave_text = Helpers.ui.get_node("WaveText")
 	wave_text.visible = false
-	
-	start_waves()
 
 func start_waves() -> void:
 	break_timer.start()

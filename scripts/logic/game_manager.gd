@@ -9,6 +9,7 @@ class_name GameManager
 @onready var info_text: Label = $"Player/PlayerCamera/UI/InfoText"
 @onready var asteroid_field_logic = $"logic/AsteroidFieldLogic"
 @onready var session_control_logic = $"logic/SessionControlLogic"
+@onready var wave_manager = $"logic/WaveManager"
 
 var player_node: Node2D
 var game_started := false
@@ -39,6 +40,8 @@ func start_game() -> void:
 	game_started = true
 	if info_text:
 		info_text.visible = false
+	if wave_manager:
+		wave_manager.start_waves()
 
 
 func restart_game() -> void:
