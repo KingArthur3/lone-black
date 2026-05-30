@@ -9,6 +9,8 @@ class_name Bullet
 @export var detection_range : float = 200.0
 # How fast the bullet can turn towards the target (in degrees per second).
 @export var turn_rate : float = 60.0
+# The cone of detection in front of the bullet (in degrees). e.g. 90 means 45 degrees to each side.
+@export var detection_fov : float = 90.0
 
 @export_group("Visuals & Effects")
 @export var explosion_scene : PackedScene
@@ -29,13 +31,23 @@ func get_closest_enemy() -> Node2D:
 	var enemies = get_tree().get_nodes_in_group("drone")
 	var closest_distance = INF
 	var closest_enemy = null
+	
+	var forward_dir = linear_velocity.normalized()
+	if forward_dir == Vector2.ZERO:
+		forward_dir = Vector2.RIGHT.rotated(rotation)
+		
+	var half_fov_rad = deg_to_rad(detection_fov / 2.0)
+	
 	for enemy in enemies:
 		if is_instance_valid(enemy):
-			var distance = global_position.distance_to(enemy.global_position)
-			if distance < closest_distance:
-				closest_distance = distance
-				closest_enemy = enemy
-	return closest_enemy if closest_distance < detection_range else null 
+			var to_enemy = enemy.global_position - global_position
+			var distance = to_enemy.length()
+			if distance > 0.0 and distance < detection_range and distance < closest_distance:
+				var angle_diff = abs(forward_dir.angle_to(to_enemy / distance))
+				if angle_diff <= half_fov_rad:
+					closest_distance = distance
+					closest_enemy = enemy
+	return closest_enemy 
 
 
 func _physics_process(delta: float) -> void:

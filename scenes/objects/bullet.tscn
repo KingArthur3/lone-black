@@ -1,10 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://tts7si2avep3"]
+[gd_scene format=3 uid="uid://tts7si2avep3"]
 
 [ext_resource type="Script" uid="uid://bajtiytk71qdr" path="res://scripts/objects/bullet.gd" id="1_qge6c"]
 [ext_resource type="PackedScene" uid="uid://dbfvn5ok7f28f" path="res://scenes/objects/explosions/explosion.tscn" id="2_a6ixa"]
 [ext_resource type="Texture2D" uid="uid://cbi2po3oqbshg" path="res://sprites/player_bullet.png" id="3_nryna"]
 [ext_resource type="PackedScene" uid="uid://yw1edpxdaaq4" path="res://scenes/objects/templates/component.tscn" id="4_xpjxq"]
-[ext_resource type="Script" path="res://scripts/components/shared/torque_movement_component.gd" id="5_8mcxg"]
+[ext_resource type="Script" uid="uid://bnek7mooofwke" path="res://scripts/components/shared/torque_movement_component.gd" id="5_8mcxg"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qge6c"]
 radius = 0.99999994
@@ -27,12 +27,14 @@ texture = ExtResource("3_nryna")
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_qge6c")
 
-[node name="Components" type="Node2D" parent="."]
+[node name="Components" type="Node2D" parent="." unique_id=1231499034]
 
-[node name="BulletMovementComponent" parent="Components" instance=ExtResource("4_xpjxq")]
+[node name="BulletMovementComponent" parent="Components" unique_id=1496561530 instance=ExtResource("4_xpjxq")]
 script = ExtResource("5_8mcxg")
 turn_thrust = 0.1
+max_turn_speed = 100.0
 forward_thrust = 10.0
+max_speed = 100.0
 
 [node name="DespawnTimer" type="Timer" parent="." unique_id=838512321]
 wait_time = 5.0
