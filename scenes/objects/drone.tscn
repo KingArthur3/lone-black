@@ -52,9 +52,9 @@ player_damage = 99
 desired_angular_velocity = 3.0
 desired_chase_angular_velocity = 10.0
 torque = 30.0
-max_speed = 80
+max_speed = 120.0
 max_chase_speed = 200
-max_catch_up_speed = 120
+max_catch_up_speed = 140.0
 wandering_distance = 220
 chase_distance = 110
 

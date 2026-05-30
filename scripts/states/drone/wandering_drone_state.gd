@@ -20,6 +20,11 @@ func enter() -> void:
 
 
 func update(_delta: float) -> void:
+	var health_component = object.get_node_or_null("Components/HealthComponent")
+	if health_component and health_component.is_damaged:
+		finished.emit(self, "ChasingDroneState")
+		return
+
 	if is_instance_valid(player):
 		var distance_to_player : float = object.global_position.distance_to(player.global_position)
 		

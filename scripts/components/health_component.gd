@@ -30,7 +30,10 @@ func _on_hit_sprite_duration_timer_timeout() -> void:
 	sprite.frame = 0
 
 
+var is_damaged : bool = false
+
 func damage(amount : int = 1):
+	is_damaged = true
 	health -= amount
 	if health <= 0:
 		if explosion_scene:

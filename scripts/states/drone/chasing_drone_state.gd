@@ -36,6 +36,10 @@ func exit() -> void:
 
 
 func update(_delta: float) -> void:
+	var health_component = object.get_node_or_null("Components/HealthComponent")
+	if health_component and health_component.is_damaged:
+		return
+
 	if not is_instance_valid(player) or\
 			object.global_position.distance_to(player.global_position) > drone_movement_component.chase_distance:
 		finished.emit(self, "WanderingDroneState")
