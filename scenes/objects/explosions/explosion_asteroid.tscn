@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://dgsu8ab2rsxdf"]
+
+[ext_resource type="PackedScene" uid="uid://dbfvn5ok7f28f" path="res://scenes/objects/explosions/explosion.tscn" id="1_vk5sb"]
+[ext_resource type="Texture2D" uid="uid://cn0y6qrlp6fqo" path="res://sprites/asteroid_explosion_particle.png" id="2_br2xi"]
+
+[sub_resource type="Gradient" id="Gradient_br2xi"]
+colors = PackedColorArray(0.27387258, 0.2738728, 0.27387264, 1, 0.18039216, 0.18039216, 0.2, 1)
+
+[node name="ExplosionAsteroid" unique_id=931397158 instance=ExtResource("1_vk5sb")]
+amount = 10
+texture = ExtResource("2_br2xi")
+lifetime = 3.0
+emission_shape = 1
+emission_sphere_radius = 10.0
+initial_velocity_min = 4.0
+initial_velocity_max = 12.0
+scale_amount_min = 1.0
+scale_amount_max = 2.0
+color_initial_ramp = SubResource("Gradient_br2xi")
+particle_texture = ExtResource("2_br2xi")
+size = 2.5
+
+[node name="ExplosionSound" parent="." index="0" unique_id=297632957]
+volume_db = -3.0
+max_distance = 400.0
