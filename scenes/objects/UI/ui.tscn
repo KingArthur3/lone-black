@@ -1041,15 +1041,6 @@ value = 3.0
 texture_progress = ExtResource("1_cw0pl")
 script = ExtResource("2_wbvat")
 
-[node name="WaveText" type="Label" parent="." unique_id=404195961]
-offset_left = 48.0
-offset_top = 30.0
-offset_right = 89.0
-offset_bottom = 42.0
-theme_override_fonts/font = SubResource("FontFile_pcjdn")
-theme_override_font_sizes/font_size = 16
-text = "WAVE 1"
-label_settings = SubResource("LabelSettings_cw0pl")
 
 [node name="BoostIcon" type="TextureRect" parent="." unique_id=745194253]
 visible = false

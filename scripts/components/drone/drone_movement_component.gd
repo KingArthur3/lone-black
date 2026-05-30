@@ -14,6 +14,10 @@ class_name DroneMovementComponent
 @export var max_catch_up_speed : float = 200
 @export var wandering_distance : float = 300
 @export var chase_distance : float = 120
+@export var detection_range : float = 250.0
+@export var idle_rotation_speed : float = 1.0
+@export var idle_flash_interval : float = 3.0
+
 
 var player : Node
 

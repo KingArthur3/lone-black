@@ -37,7 +37,7 @@ forward_thrust = 10.0
 max_speed = 100.0
 
 [node name="DespawnTimer" type="Timer" parent="." unique_id=838512321]
-wait_time = 5.0
+wait_time = 2.0
 autostart = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

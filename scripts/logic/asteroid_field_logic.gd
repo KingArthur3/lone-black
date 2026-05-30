@@ -3,6 +3,7 @@ class_name AsteroidFieldLogic
 ## Manages dynamic asteroid spawning and cleanup around the player.
 
 @export var asteroid_scene: PackedScene
+@export var drone_scene: PackedScene
 @export var asteroid_spawn_distance := 2000.0
 @export var asteroid_despawn_distance := 2500.0
 @export var grid_cell_size := 350 # Increased default to 350 for better spacing
@@ -20,7 +21,7 @@ func update_field(player_pos: Vector2) -> void:
 			var zone := Vector2i(x, y)
 			var zone_world_pos = zone_to_world(zone)
 			if player_pos.distance_to(zone_world_pos) < asteroid_spawn_distance and not asteroid_zones.has(zone):
-				spawn_asteroids_in_zone(zone)
+				spawn_asteroids_in_zone(zone, player_pos)
 
 	cleanup_distant_asteroids(player_pos)
 
@@ -33,7 +34,7 @@ func zone_to_world(zone: Vector2i) -> Vector2:
 	return Vector2(zone) * grid_cell_size
 
 
-func spawn_asteroids_in_zone(zone: Vector2i) -> void:
+func spawn_asteroids_in_zone(zone: Vector2i, player_pos: Vector2) -> void:
 	if asteroid_scene == null:
 		return
 
@@ -88,6 +89,11 @@ func spawn_asteroids_in_zone(zone: Vector2i) -> void:
 					if is_instance_valid(existing) and existing.global_position.distance_to(spawn_pos) < min_dist:
 						too_close = true
 						break
+			
+			# Ensure we do not spawn asteroids directly on top of the player
+			if not too_close:
+				if spawn_pos.distance_to(player_pos) < 150.0:
+					too_close = true
 
 			if not too_close:
 				var asteroid = asteroid_scene.instantiate() as Node2D
@@ -100,12 +106,54 @@ func spawn_asteroids_in_zone(zone: Vector2i) -> void:
 
 			attempt += 1
 
-	asteroid_zones[zone] = true
-	
 	# Append only valid instances to the active list
 	for ast in asteroids_in_zone:
 		if is_instance_valid(ast):
 			active_asteroids.append(ast)
+
+	# Procedurally spawn drones in this zone
+	if drone_scene and randf() < 0.20:
+		var drone_count = randi_range(1, 2)
+		for _d in drone_count:
+			var success := false
+			var attempt := 0
+			while not success and attempt < max_attempts:
+				var offset = Vector2(randf_range(0, grid_cell_size), randf_range(0, grid_cell_size))
+				var spawn_pos = zone_pos + offset
+				
+				var too_close := false
+				
+				# Check against asteroids in this zone
+				for existing in asteroids_in_zone:
+					if is_instance_valid(existing) and existing.global_position.distance_to(spawn_pos) < 64.0:
+						too_close = true
+						break
+				
+				# Check against active entities (asteroids/drones) in active_asteroids
+				if not too_close:
+					for existing in active_asteroids:
+						if is_instance_valid(existing) and existing.global_position.distance_to(spawn_pos) < 64.0:
+							too_close = true
+							break
+				
+				# Ensure we do not spawn drones too close to the player to avoid instant aggro
+				if not too_close:
+					if spawn_pos.distance_to(player_pos) < 500.0:
+						too_close = true
+							
+				if not too_close:
+					var drone = drone_scene.instantiate() as Node2D
+					drone.global_position = spawn_pos
+					
+					var world_root: Node = Helpers.game if is_instance_valid(Helpers.game) else get_tree().current_scene
+					world_root.add_child(drone)
+					
+					active_asteroids.append(drone)
+					success = true
+				
+				attempt += 1
+
+	asteroid_zones[zone] = true
 
 
 func cleanup_distant_asteroids(player_pos: Vector2) -> void:

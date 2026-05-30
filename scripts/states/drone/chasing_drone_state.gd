@@ -13,6 +13,7 @@ class_name ChasingDroneState
 @onready var blinking_timer: Timer = $"BlinkingTimer"
 
 var player : Node
+var alert_played : bool = false
 
 func _ready() -> void:
 	player = Helpers.player
@@ -29,6 +30,24 @@ func _on_blinking_timer_timeout() -> void:
 func enter() -> void:
 	sprite.frame = state_sprite
 	blinking_timer.start()
+	if engine_component:
+		engine_component.start()
+	if not alert_played:
+		alert_played = true
+		play_alert_beeps()
+
+func play_alert_beeps() -> void:
+	var beep = object.get_node_or_null("BeepSound") as AudioStreamPlayer2D
+	if beep:
+		beep.pitch_scale = 1.8
+		var tween = create_tween()
+		tween.tween_callback(func(): beep.play())
+		tween.tween_interval(0.15)
+		tween.tween_callback(func(): beep.play())
+		tween.tween_interval(0.15)
+		tween.tween_callback(func(): beep.play())
+		tween.tween_interval(0.30)
+		tween.tween_callback(func(): beep.pitch_scale = 1.0)
 	
 
 func exit() -> void:

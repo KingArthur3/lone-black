@@ -7,6 +7,7 @@ class_name CatchUpDroneState
 @export var state_sprite : int
 
 @onready var drone_movement_component: DroneMovementComponent = $"../../Components/DroneMovementComponent"
+@onready var engine_component: EngineComponent = $"../../Components/EngineComponent"
 var player : Node
 
 func _ready() -> void:
@@ -15,6 +16,8 @@ func _ready() -> void:
 	
 func enter() -> void:
 	sprite.frame = state_sprite
+	if engine_component:
+		engine_component.start()
 	
 
 func update(_delta: float) -> void:

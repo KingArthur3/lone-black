@@ -13,6 +13,8 @@
 [ext_resource type="PackedScene" uid="uid://dmg38viensgon" path="res://scenes/objects/states/drone/wandering_drone_state.tscn" id="9_ybjvg"]
 [ext_resource type="PackedScene" uid="uid://dioo7kft21vtg" path="res://scenes/objects/states/drone/catch_up_drone_state.tscn" id="10_3mp46"]
 [ext_resource type="PackedScene" uid="uid://dkj74ttibhnw3" path="res://scenes/objects/states/drone/chasing_drone_state.tscn" id="12_3mp46"]
+[ext_resource type="Script" uid="uid://b0eckl51iqi20" path="res://scripts/states/drone/idle_drone_state.gd" id="13_idle"]
+[ext_resource type="AudioStream" uid="uid://dbs0otqwachaj" path="res://audio/effects/beep.mp3" id="14_beep"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6kwg8"]
 radius = 6.0
@@ -49,24 +51,29 @@ drone_damage = 99
 player_damage = 99
 
 [node name="DroneMovementComponent" parent="Components" unique_id=970407055 instance=ExtResource("7_g22fv")]
+forward_thrust = 50.0
 desired_angular_velocity = 3.0
 desired_chase_angular_velocity = 10.0
 torque = 30.0
-max_speed = 120.0
+max_speed = 100.0
 max_chase_speed = 200
-max_catch_up_speed = 140.0
+max_catch_up_speed = 120.0
 wandering_distance = 220
 chase_distance = 110
+detection_range = 180.0
+idle_flash_interval = 2.0
 
 [node name="EngineComponent" parent="Components" unique_id=1885692521 instance=ExtResource("8_ybjvg")]
-autostart = true
 min_volume_db = -40.0
 engine_sound = ExtResource("4_18hk5")
 
 [node name="StateMachine" type="Node" parent="." unique_id=2056702184 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("8_hxhln")
-initial_state = NodePath("CatchUpDroneState")
+initial_state = NodePath("IdleDroneState")
 metadata/_custom_type_script = "uid://cl1dn73u71q0i"
+
+[node name="IdleDroneState" type="Node" parent="StateMachine" unique_id=111222333]
+script = ExtResource("13_idle")
 
 [node name="WanderingDroneState" parent="StateMachine" unique_id=1300511290 instance=ExtResource("9_ybjvg")]
 state_sprite = 0
@@ -77,5 +84,10 @@ state_sprite = 0
 [node name="ChasingDroneState" parent="StateMachine" unique_id=1936722059 instance=ExtResource("12_3mp46")]
 blinking_sprite = 1
 blinking_interval = 0.2
+
+[node name="BeepSound" type="AudioStreamPlayer2D" parent="." unique_id=400500600]
+stream = ExtResource("14_beep")
+volume_db = 6.0
+max_distance = 500.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

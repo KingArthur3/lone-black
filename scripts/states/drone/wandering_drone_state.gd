@@ -17,6 +17,8 @@ func _ready() -> void:
 
 func enter() -> void:
 	sprite.frame = state_sprite
+	if engine_component:
+		engine_component.start()
 
 
 func update(_delta: float) -> void:

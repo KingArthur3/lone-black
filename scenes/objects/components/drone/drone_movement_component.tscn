@@ -14,3 +14,8 @@ max_chase_speed = 250
 max_catch_up_speed = 200
 wandering_distance = 300
 chase_distance = 120
+detection_range = 250.0
+idle_rotation_speed = 1.0
+idle_flash_interval = 3.0
+
+

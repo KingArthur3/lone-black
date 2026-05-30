@@ -21,8 +21,8 @@ class_name EngineComponent
 		intensity = new_intensity
 		engine_particles_emitter.amount = int(round(base_particles_amount + intensity))
 		if engine_on:
-			_fade_id += 1
-			fade_volume_to(max_volume_db + intensity, _fade_id)
+			_target_volume_db = max_volume_db + intensity
+			_is_fading = true
 
 var boosting : bool = false:
 	set(new_boosting):
@@ -30,10 +30,11 @@ var boosting : bool = false:
 		boost_particles_emitter.emitting = new_boosting
 
 var engine_on : bool = false		
-var _fade_id := 0  # Used to cancel or ignore outdated fades
 
 # Volume management variables
 var _base_volume_db : float = -80.0
+var _target_volume_db : float = -80.0
+var _is_fading : bool = false
 var _ducking_db : float = 0.0
 var _is_drone : bool = false
 
@@ -41,6 +42,8 @@ var _is_drone : bool = false
 static var active_drone_engines: Array[EngineComponent] = []
 
 static func register_drone_engine(engine: EngineComponent) -> void:
+	if not is_instance_valid(engine):
+		return
 	if not active_drone_engines.has(engine):
 		active_drone_engines.append(engine)
 	_update_drone_engine_volumes()
@@ -67,12 +70,14 @@ static func _update_drone_engine_volumes() -> void:
 		ducking_db = 5.0 * (log(count) / log(10.0))
 		
 	for engine in active_drone_engines:
-		engine._ducking_db = ducking_db
+		if is_instance_valid(engine):
+			engine._ducking_db = ducking_db
 
 
 func _ready() -> void:
 	_is_drone = object and object.is_in_group("drone")
 	_base_volume_db = min_volume_db
+	_target_volume_db = min_volume_db
 	intensity = 0
 	engine_particles_emitter.texture = engine_particles
 	boost_particles_emitter.texture = boost_particles
@@ -83,11 +88,26 @@ func _ready() -> void:
 
 
 func _exit_tree() -> void:
-	unregister_drone_engine(self)
+	if is_instance_valid(self):
+		unregister_drone_engine(self)
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if engine_sound_player.playing:
+		if _is_fading:
+			if volume_fade_duration > 0.0:
+				var step = abs(max_volume_db - min_volume_db) / volume_fade_duration * delta
+				_base_volume_db = move_toward(_base_volume_db, _target_volume_db, step)
+			else:
+				_base_volume_db = _target_volume_db
+				
+			# Stop playing if we faded out and reached the target
+			if not engine_on and _base_volume_db <= min_volume_db + 0.05:
+				_is_fading = false
+				engine_sound_player.stop()
+		else:
+			_base_volume_db = _target_volume_db
+			
 		engine_sound_player.volume_db = _base_volume_db - _ducking_db
 
 
@@ -99,12 +119,13 @@ func start():
 	if _is_drone:
 		register_drone_engine(self)
 		
-	_fade_id += 1  # Cancel any previous fade
 	if not engine_sound_player.playing:
 		_base_volume_db = min_volume_db
 		engine_sound_player.volume_db = min_volume_db - _ducking_db
 		engine_sound_player.play()
-	await fade_volume_to(max_volume_db + intensity, _fade_id)
+		
+	_target_volume_db = max_volume_db + intensity
+	_is_fading = true
 	
 
 func stop():
@@ -116,28 +137,5 @@ func stop():
 	if _is_drone:
 		unregister_drone_engine(self)
 	
-	_fade_id += 1  # Cancel any previous fade
-	var current_fade = _fade_id
-	await fade_volume_to(min_volume_db, current_fade)
-	if _fade_id == current_fade:  # Only stop if no newer fade started
-		engine_sound_player.stop()
-
-
-func fade_volume_to(target_db: float, fade_id: int) -> void:
-	var initial_db := _base_volume_db
-	var time_passed := 0.0
-
-	while time_passed < volume_fade_duration:
-		if fade_id != _fade_id:
-			return  # A newer fade started; exit this one
-
-		await get_tree().process_frame  # More efficient than creating a zero-time timer
-		var delta := get_process_delta_time()
-		time_passed += delta
-
-		var t : float = clamp(time_passed / volume_fade_duration, 0.0, 1.0)
-		_base_volume_db = lerp(initial_db, target_db, t)
-
-	# Ensure final value is set if fade hasn't been interrupted
-	if fade_id == _fade_id:
-		_base_volume_db = target_db
+	_target_volume_db = min_volume_db
+	_is_fading = true
